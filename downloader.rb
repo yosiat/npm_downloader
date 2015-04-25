@@ -133,7 +133,7 @@ end
 
 
 registry = SkimRegistry.new("https://skimdb.npmjs.com/registry")
-fetch_time = Time.new(2015, 4, 11)
+fetch_time = Time.new(2015, 4, 4)
 changes = registry.changes_since 1063507
 
 puts "Downloading #{changes.count} changes"
