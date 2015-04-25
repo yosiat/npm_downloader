@@ -50,6 +50,8 @@ class Package
 	def download_changes_since time
 		write_package_metadata
 
+		puts @package_metadata.keys
+
 		if is_valid_package
 			versions_to_download = versions_since time
 
@@ -61,7 +63,7 @@ class Package
 	end
 
 	def is_valid_package
-		valid_key? "version" and valid_key? "time"
+		valid_key? "versions" and valid_key? "time"
 	end
 
 	def valid_key? key
@@ -136,13 +138,8 @@ registry = SkimRegistry.new("https://skimdb.npmjs.com/registry")
 fetch_time = Time.new(2015, 4, 11)
 changes = registry.changes_since 1063507
 
-
-
-changes = changes.first(12 * 4)
-
-
 puts "Downloading #{changes.count} changes"
-Parallel.each(changes, :in_processes => 12) do |change|
+Parallel.each(changes, :in_processes => 48) do |change|
 	begin
 		package = Package.new change["id"], registry
 		package.download_changes_since fetch_time
