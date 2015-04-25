@@ -50,8 +50,6 @@ class Package
 	def download_changes_since time
 		write_package_metadata
 
-		puts @package_metadata.keys
-
 		if is_valid_package
 			versions_to_download = versions_since time
 
@@ -83,10 +81,10 @@ class Package
 	end
 
 	def download_attachment attachment
-		tarball_url = version["dist"]["tarball"]
+		tarball_url = attachment["dist"]["tarball"]
 		puts "Downloading tarball #{tarball_url} for #{@id}"
 
-		tarball_dir = "#{directory}/versions/#{@id}-#{version["version"]}.tgz"
+		tarball_dir = "#{directory}/versions/#{@id}-#{attachment["version"]}.tgz"
 		IO.copy_stream open(tarball_url), tarball_dir 
 	end
 
